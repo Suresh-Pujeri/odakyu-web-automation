@@ -43,3 +43,6 @@ Capture videos, screenshots and other artifacts on failure.
 Integrate your POMs as extensible fixtures.
 
 Source: https://playwright.dev/docs/intro/
+
+
+# Required node >= 24
