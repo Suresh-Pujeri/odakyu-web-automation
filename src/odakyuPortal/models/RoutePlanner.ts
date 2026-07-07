@@ -43,6 +43,7 @@ const elements = {
   routePlannerScheduleSaveBtn: '//h2[text()="Schedule"]/parent::div/following-sibling::form//button[@type="submit"]',
   schedulePopUpWindowText:
     '//span[contains(., "Do you want to create the route(s) for Friday? You have selected a route originally scheduled for a different service day.")]',
+  clsoeSuccessMessagewindow: 'button[type="button"] g[fill-rule="evenodd"][stroke-linecap="square"]',
 };
 
 type Elements = Record<keyof typeof elements, Locator>;
@@ -183,7 +184,7 @@ export default class RoutePlannerPage {
     if (isPopUpVisible) {
       await this.elements.routeAddStopPopUpCancelOkBtn.click();
     }
-    await this.elements.routeAddStopSuccessMessage.waitFor({ state: 'visible' });
+    await this.elements.routeAddStopSuccessMessage.first().waitFor({ state: 'visible' });
   }
   async goBackToTheRoutePlannerPage(): Promise<void> {
     await this.elements.backButton.click();
@@ -208,5 +209,31 @@ export default class RoutePlannerPage {
     if (isPopUpVisible) {
       await this.scheduleCancelYesBtn('Yes').click();
     }
+  }
+  async fillRouteTemplateDetailsFormandatory(
+    routeName: string,
+    vehicleType: string,
+    wasteType: string,
+  ): Promise<void> {
+    await this.routeNameTextField('name', 'routeTemplateName').fill(routeName);
+    await this.routeNameTextField('name', 'scheduledDays').click();
+    await this.daysOfServiceCheckbox('All').click();
+    await this.elements.daysOfServcieApplyButton.click();
+    await this.routeNameTextField('id', 'vehicleTypeId').click();
+
+    const isResidential = vehicleType === 'Residential';
+    const isCommercial = vehicleType === 'Commercial';
+
+    await this.vehicleTypeDropdownOption(vehicleType).click();
+    if (isResidential || isCommercial) {
+      await this.routeNameTextField('id', 'wasteMaterialTypeId').click();
+      await this.routeNameTextField('id', 'wasteMaterialTypeId').fill(wasteType);
+      await this.wasteTypeDropdownOption(wasteType).last().click();
+    }
+  }
+  async searchCreatedRouteTemplateForSwitchedVendor(routeName: string): Promise<void> {
+    await this.elements.searchRouteTemplateNameTextField.fill(routeName);
+    await this.elements.searchRouteTemplateNameTextField.press('Enter');
+    await this.createdRouteTemplateName(routeName).first().waitFor({ state: 'visible' });
   }
 }

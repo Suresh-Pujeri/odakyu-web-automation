@@ -67,7 +67,7 @@ Automated Playwright tests for the Print Map feature have been successfully impl
 
 ## Test Data Used
 
-- **Credentials:** `suresh.pujeri@routeware.com` / `Pusavi@345` (adminUser)
+- **Credentials:** `` (adminUser)
 - **Vendor:** Odakyu Premier SmartCity
 - **Application URL:** https://hauler.qa.ap.odakyu.smartcity.routeware.com/account/login
 

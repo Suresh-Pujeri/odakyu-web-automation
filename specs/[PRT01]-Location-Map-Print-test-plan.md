@@ -3,8 +3,6 @@
 ## Overview
 This test plan covers the Location Map Print feature described in user story RPO-3163. It includes happy paths, negative scenarios, edge cases, and verification steps for PDF output.
 
-**Application URL:** https://hauler.qa.ap.odakyu.smartcity.routeware.com/account/login
-**Test credentials:** suresh.pujeri@routeware.com / Pusavi@345
 
 ---
 

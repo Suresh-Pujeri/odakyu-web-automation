@@ -14,7 +14,7 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       await expect(mapShapesPage.elements.addPolygonLayerBtn).toBeVisible();
       await expect(mapShapesPage.elements.mapShapesHeaderText).toBeVisible();
     });
-    test.only(`TC_02: should allow ${userRole} to create Map Shapes alyer`, async ({
+    test(`TC_02: should allow ${userRole} to create Map Shapes alyer`, async ({
       mapShapesPage,
     }) => {
       await mapShapesPage.navigateToMapShapes('Map Shapes');
@@ -28,7 +28,6 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       await expect(mapShapesPage.elements.mapLayersBtn.nth(1)).toBeVisible();
       await expect(mapShapesPage.elements.mapLayersBtn.nth(2)).toBeVisible();
       await expect(mapShapesPage.elements.mapLayersBtn.nth(3)).toBeVisible();
-      //await expect(mapShapesPage.elements.mapLayersBtn.nth(4)).toBeVisible();
       await mapShapesPage.addMapShapesLayers();
       await expect(mapShapesPage.shapesOptions('Draw line')).toBeVisible();
       await expect(mapShapesPage.shapesOptions('Arrow line')).toBeVisible();
@@ -36,7 +35,7 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       await expect(mapShapesPage.shapesOptions('Draw polygon')).toBeVisible();
       //await mapShapesPage.drawShapesAndSave();
       await mapShapesPage.addEDit();
-      await mapShapesPage.page.pause();
+  
     });
   });
 }
