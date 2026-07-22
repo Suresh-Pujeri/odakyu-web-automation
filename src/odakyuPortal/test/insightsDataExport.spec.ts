@@ -5,7 +5,7 @@ import fs from 'fs';
 import moment from 'moment';
 
 for (const userRole of userRoleAccessMatrix.adminOnly) {
-    test.describe('Print Map - PRT01', () => {
+    test.describe('Insights Data Export', () => {
         test.use({ storageState: `userStates/${userRole}UserStorageState.json` });
         test.beforeEach(async ({ routePlannerPage }) => {
             await routePlannerPage.goto();

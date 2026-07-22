@@ -111,39 +111,22 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
                 await page.waitForSelector('#map', { timeout: 10000 });
             }
             await page.getByRole('button').filter({ hasText: /^$/ }).nth(4).click();
-            await page.getByRole('button').filter({ hasText: /^$/ }).nth(4).press('ArrowDown');
-            await page.getByRole('button').filter({ hasText: /^$/ }).nth(4).press('ArrowDown');
-            await page.getByRole('button').filter({ hasText: /^$/ }).nth(4).press('ArrowDown');
-            await page.getByRole('button').filter({ hasText: /^$/ }).nth(4).press('ArrowDown');
-            await page.getByRole('button').filter({ hasText: /^$/ }).nth(4).press('ArrowDown');
-            await page.getByRole('button').filter({ hasText: /^$/ }).nth(4).press('ArrowDown');
-            await page.getByRole('button').filter({ hasText: /^$/ }).nth(4).press('ArrowDown');
-            await page.getByRole('button').filter({ hasText: /^$/ }).nth(4).press('ArrowDown');
-            await page.locator('div:nth-child(7) > .sc-bGIgrQ > .sc-nBRWj > .sc-lajtew').click();
-            await page.locator('body').press('ArrowDown');
-            await page.locator('body').press('ArrowDown');
-            await page.locator('body').press('ArrowDown');
-            await page.locator('body').press('ArrowDown');
-            await page.locator('body').press('ArrowDown');
-            await page.locator('body').press('ArrowDown');
-            await page.locator('body').press('ArrowDown');
-            await page.locator('body').press('ArrowDown');
-            await page.locator('body').press('ArrowDown');
-            await page.locator('body').press('ArrowDown');
-            await page.locator('body').press('ArrowDown');
-            await page.locator('body').press('ArrowDown');
-            await page.locator('body').press('ArrowDown');
-            await page.locator('body').press('ArrowDown');
-            await page.locator('body').press('ArrowDown');
-            await page.locator('label:nth-child(21) > .sc-hGPBjI').click();
+            await expect(page.locator(`//span[contains(.,'Show location alerts')]`)).toBeVisible();
+            await expect(page.locator(`//span[contains(.,'Show location alerts')]/ancestor::div/following-sibling::div/div[contains(.,'Hauler Locations')]`)).toBeVisible();
+            await expect(page.locator(`//span[contains(.,'Show location alerts')]/ancestor::div/following-sibling::div/div[contains(.,'Geo-fences')]`)).toBeVisible();
+            await expect(page.locator(`//span[contains(.,'Show location alerts')]/ancestor::div/following-sibling::div/div[contains(.,'Map Layers')]`)).toBeVisible();
+            await page.locator(`//span[contains(.,'Show location alerts')]/ancestor::div/following-sibling::div/div[contains(.,'Map Layers')]`).click();
+            await expect(page.locator(`input[placeholder="Search"]`)).toBeVisible();
+            await page.locator(`input[placeholder="Search"]`).click();
+            await page.locator(`input[placeholder="Search"]`).fill('Ryan Test Layer');
+            await expect(page.locator(`//span[contains(.,'Ryan Test Layer')]/parent::label/span`).first()).toBeVisible();
+            await page.locator(`//span[contains(.,'Ryan Test Layer')]/parent::label/span`).first().click();
+
             await page.getByRole('button', { name: 'Apply' }).click();
             await page.getByRole('textbox', { name: 'Address', exact: true }).click();
             await page.getByRole('textbox', { name: 'Address', exact: true }).fill('sobudai');
             await page.locator('span').filter({ hasText: 'Sōbudai' }).first().click();
             await page.getByRole('button').filter({ hasText: /^$/ }).nth(2).click();
-            await page.getByRole('button').filter({ hasText: /^$/ }).nth(2).press('ArrowDown');
-            await page.getByRole('button').filter({ hasText: /^$/ }).nth(2).press('ArrowDown');
-            await page.getByRole('button').filter({ hasText: /^$/ }).nth(2).press('ArrowDown');
             await page.getByRole('button').filter({ hasText: /^$/ }).nth(2).press('ArrowDown');
             await page.getByRole('region', { name: 'Map' }).click({
                 position: {
@@ -152,12 +135,7 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
                 }
             });
             await page.getByRole('region', { name: 'Map' }).press('ArrowDown');
-            await page.getByRole('region', { name: 'Map' }).press('ArrowDown');
-            await page.getByRole('region', { name: 'Map' }).press('ArrowDown');
             await page.getByRole('button').filter({ hasText: /^$/ }).nth(1).click();
-            await page.getByRole('button').filter({ hasText: /^$/ }).nth(1).press('ArrowLeft');
-            await page.getByRole('button').filter({ hasText: /^$/ }).nth(1).press('ArrowLeft');
-            await page.getByRole('button').filter({ hasText: /^$/ }).nth(1).press('ArrowLeft');
             await page.getByRole('button').filter({ hasText: /^$/ }).nth(1).press('ArrowLeft');
             await page.getByRole('region', { name: 'Map' }).click({
                 position: {
@@ -166,15 +144,7 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
                 }
             });
             await page.getByRole('region', { name: 'Map' }).press('ArrowLeft');
-            await page.getByRole('region', { name: 'Map' }).press('ArrowLeft');
-            await page.getByRole('region', { name: 'Map' }).press('ArrowLeft');
             await page.locator('.sc-ctqQKy.cYaJTh').click();
-            await page.locator('body').press('ArrowUp');
-            await page.locator('body').press('ArrowUp');
-            await page.locator('body').press('ArrowUp');
-            await page.locator('body').press('ArrowUp');
-            await page.locator('body').press('ArrowUp');
-            await page.locator('body').press('ArrowUp');
             await page.locator('body').press('ArrowUp');
             await page.getByRole('button', { name: 'Print map' }).click();
             const downloadPromise = page.waitForEvent('download');

@@ -2,7 +2,7 @@ import test, { expect } from '../fixtures/baseTest';
 import { userRoleAccessMatrix } from '../../testUserStates';
 
 for (const userRole of userRoleAccessMatrix.adminOnly) {
-  test.describe(`Dispatch -- Dispatch Board tab`, () => {
+  test.describe(`Fleet -- Map Shapes tab`, () => {
     test.use({ storageState: `userStates/${userRole}UserStorageState.json` });
     test.beforeEach(async ({ routePlannerPage }) => {
       await routePlannerPage.goto();

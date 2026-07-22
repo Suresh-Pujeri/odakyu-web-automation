@@ -7,7 +7,7 @@ let driverID = `DriverID-${Date.now()}`;
 
 
 for (const userRole of userRoleAccessMatrix.adminOnly) {
-    test.describe(`Dispatch -- Route Planner tab`, () => {
+    test.describe(`Fleet -- Create Resources tab`, () => {
         test.use({ storageState: `userStates/${userRole}UserStorageState.json` });
         test.beforeEach(async ({ routePlannerPage }) => {
             await routePlannerPage.goto();
@@ -48,14 +48,13 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
             await page.getByRole('button', { name: 'Apply' }).click();
             await page.locator('input[name="linkedVehicleIds"]').click();
             await page.locator('label').filter({ hasText: 'A N D R E I - C O M E R C I A' }).click();
-            //await page.locator('label:nth-child(6) > .sc-hGPBjI').click();
             await page.getByRole('button', { name: 'Apply' }).click();
             await page.getByRole('button', { name: 'Save' }).click();
             await expect(page.getByText('Resource saved successfully.')).toBeVisible();
             await page.getByRole('textbox', { name: 'Search' }).click();
             await page.getByRole('textbox', { name: 'Search' }).fill(driverID);
-            await page.locator('.sc-fKVqWL.kLRZIX > .sc-hGPBjI').click();
-            await page.locator('//button[contains(@id,"edit-driver")]').click();
+            await expect( page.locator(`//div[contains(.,'${driverID}')]/parent::div/descendant::button[contains(@id,"edit-driver")]`)).toBeVisible();
+            await page.locator(`//div[contains(.,'${driverID}')]/parent::div/descendant::button[contains(@id,"edit-driver")]`).click();
 
             await page.locator('input[name="linkedVehicleIds"]').click();
             await page.locator(`//label[contains(text(),'Assigned Vehicles')]/parent::div/descendant::label/span`).last().click();
@@ -63,10 +62,11 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
             await page.getByRole('button', { name: 'Save' }).click();
             await page.getByRole('textbox', { name: 'Search' }).click();
             await page.getByRole('textbox', { name: 'Search' }).fill(driverID);
-            await page.locator(`//button[contains(@id,"delete-driver")]`).click();
+            await expect( page.locator(`//div[contains(.,'${driverID}')]/parent::div/descendant::button[contains(@id,"delete-driver")]`)).toBeVisible();
+            await page.locator(`//div[contains(.,'${driverID}')]/parent::div/descendant::button[contains(@id,"delete-driver")]`).click();
             //await page.getByRole('button', { name: 'Delete Resources' }).click();
             await page.getByRole('button', { name: 'Yes' }).click();
-            await expect(page.getByText('Resources successfully deleted.')).toBeVisible();
+            await expect(page.getByText('Resource deleted.')).toBeVisible();
         });
 
     });

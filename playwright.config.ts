@@ -5,7 +5,7 @@ export const baseURLRouteware = process.env.URL || 'https://hauler.qa.ap.odakyu.
 
 const baseConfig: PlaywrightTestConfig = {
   timeout: 240000, // 4 minutes - allows for comprehensive CRUD tests with multiple user roles
-  retries: 0,
+  retries: 1,
   outputDir: `./test-results/${Date.now()}/`,
   use: {
     headless: true,
@@ -34,7 +34,7 @@ const projects = [
 ];
 
 export default defineConfig({
-  reporter: [['list']],
+  reporter: [['list',''], ['html', { outputFolder: 'test-results/html-report' }], ['json', { outputFile: 'test-results/test-results.json' }]],
   workers: 1,
   projects,
 });

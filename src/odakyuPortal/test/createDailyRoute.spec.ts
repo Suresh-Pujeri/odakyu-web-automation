@@ -213,7 +213,8 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
         await test.step('reschedule route', async () => {
             await page.getByPlaceholder('Search').fill(ROUTE.name);
             await page.locator('#search-route-button').click();
-            await page.locator(`//input[contains(@id,'route')]/parent::label/span`).click();
+            await expect(page.locator(`//input[contains(@id,'route')]/parent::label/span`).first()).toBeVisible();
+            await page.locator(`//input[contains(@id,'route')]/parent::label/span`).first().click();
 
             await expect(page.locator('#delete-route-button')).toBeVisible();
             await expect(page.locator('#reschedule-route-button')).toBeVisible();

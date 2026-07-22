@@ -10,7 +10,7 @@ const elements = {
   applyButton: '#select-vendor-button',
   vendorDropDownField: 'div',
   vendorSearchResult: `//input[@id='vendorId']//ancestor::div//descendant::div[contains(text(),'Odakyu Premier SmartCity')]`,
-  dashBoardFilterText:`//span[contains(text(),'Filters')]`,
+  dashBoardFilterText:`//button[contains(text(),'Vehicles')]`,
 };
 export default class LoginPage {
   readonly page: Page;

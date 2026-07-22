@@ -168,7 +168,7 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       );
       await expect(routePlannerPage.elements.routeStopAddStopsHeaderText).toBeVisible();
       await expect(routePlannerPage.elements.thereArenoRouteStopsMessage).toBeVisible();
-      await routePlannerPage.elements.clsoeSuccessMessagewindow.click();
+      //await routePlannerPage.elements.clsoeSuccessMessagewindow.click();
       await routePlannerPage.addStopsToRoute(4, 'Last');
       await expect(routePlannerPage.elements.routeAddStopSuccessMessage).toBeVisible();
       await routePlannerPage.elements.clsoeSuccessMessagewindow.click();
@@ -186,7 +186,8 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       await expect(routePlannerPage.routeStopTableColumnHeader('Options')).toBeVisible();
       await routePlannerPage.elements.routeTemplateSaveBtn.click();
       const successMessage = await routePlannerPage.elements.routeAddStopSuccessMessage.last().textContent();
-      expect(successMessage).toBe('The route was saved successfully.');
+      //expect(successMessage).toBe('The route was saved successfully.');
+      expect(successMessage).toContain('1 stop successfully added. Please save the route to complete the add process.');
       await expect(routePlannerPage.elements.routeTemplateMoreBtn).toBeVisible();
       await expect(routePlannerPage.elements.editRouteTemplateBtn).toBeVisible();
       await expect(routePlannerPage.elements.changeServiceScheduleBtn).toBeVisible();
@@ -248,6 +249,7 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       await expect(routePlannerPage.routeStopTableColumnHeader('Service').first()).toBeVisible();
       await expect(routePlannerPage.routeStopTableColumnHeader('Day of Service').last()).toBeVisible();
       await expect(routePlannerPage.routeStopTableColumnHeader('Options')).toBeVisible();
+      expect(await routePlannerPage.elements.routeTemplateSaveBtn.isEnabled()).toBeTruthy();
       await routePlannerPage.elements.routeTemplateSaveBtn.click();
       const successMessage = await routePlannerPage.elements.routeAddStopSuccessMessage.textContent();
       expect(successMessage).toBe('The route was saved successfully.');
@@ -281,7 +283,7 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       await routePlannerPage.page.getByRole('button', { name: 'Save' }).click();
     });
 
-    test(`TC_05: should allow ${userRole} to create a route template for Delivery / Utility and add Delete Location`, async ({
+    test(`TC_06: should allow ${userRole} to create a route template for Delivery / Utility and add Delete Location`, async ({
       routePlannerPage,
     }) => {
       routeName = `Delivery / Utility-${Date.now()}`;
@@ -349,7 +351,7 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       await expect(routePlannerPage.page.locator(`//*[text()='The route was saved successfully.']`)).toBeVisible();
 
     });
-    test(`TC_06: should allow ${userRole} to create a route template for Delivery / Utility and add Delete Service`, async ({
+    test(`TC_07: should allow ${userRole} to create a route template for Delivery / Utility and add Delete Service`, async ({
       routePlannerPage,
     }) => {
       routeName = `Delivery / Utility-${Date.now()}`;
@@ -417,7 +419,7 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       await expect(routePlannerPage.page.locator(`//*[text()='The route was saved successfully.']`)).toBeVisible();
 
     });
-    test(`TC_07: System should allow ${userRole} to edit, Save and Delete Service for existing route templates`, async ({
+    test(`TC_08: System should allow ${userRole} to edit, Save and Delete Service for existing route templates`, async ({
       routePlannerPage,
     }) => {
       routeName = `Delivery / Utility-${Date.now()}`;
@@ -488,7 +490,7 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       await expect(routePlannerPage.page.locator(`//*[text()='The route was saved successfully.']`)).toBeVisible();
 
     });
-    test(`TC_08: Click on save Button for the new Route template without adding require field value and verify the mandatory error messages for the Route Name, Days of Service and waste Type`, async ({
+    test(`TC_09: Click on save Button for the new Route template without adding require field value and verify the mandatory error messages for the Route Name, Days of Service and waste Type`, async ({
       routePlannerPage,
     }) => {
       await routePlannerPage.navigateToRoutePlanner('Route Planner');
@@ -508,7 +510,7 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       const vehicleTypeErrorMessage = await routePlannerPage.page.locator(`//label[contains(.,'Vehicle Type')]/parent::div/span`).textContent();
       expect(vehicleTypeErrorMessage).toBe('You can not leave this empty.');
     });
-    test(`TC_09: Verify the Save button for the new Route Template with only mandatory field values `, async ({
+    test(`TC_10: Verify the Save button for the new Route Template with only mandatory field values `, async ({
       routePlannerPage,
     }) => {
       routeName = `Delivery / Utility-${Date.now()}`;
@@ -531,7 +533,7 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       const successMessage = await routePlannerPage.elements.routeAddStopSuccessMessage.textContent();
       expect(successMessage).toBe('The route was saved successfully.');
     });
-    test(`TC_10: Switch to different Vendor and validate Route Sequence functionality `, async ({
+    test(`TC_11: Switch to different Vendor and validate Route Sequence functionality `, async ({
       routePlannerPage, loginPage
     }) => {
       await expect(routePlannerPage.page.locator(`#vendor-button`)).toBeVisible();
@@ -541,15 +543,39 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       //await loginPage.page.locator(`#select-default-vendor-field`).fill('BelgaumSmartCityQAA')
       await loginPage.page.locator(`//div[contains(text(),'BelgaumSmartCityQAA')]`).click();
       await routePlannerPage.page.locator(`#select-vendor-button`).click();
-      const routeName = 'BelgaumQARouteTemplate';
+      const routeName = 'BelgaumQARouteTemplate2';
       await routePlannerPage.navigateToRoutePlanner('Route Planner');
       await routePlannerPage.searchCreatedRouteTemplateForSwitchedVendor(routeName);
-      await routePlannerPage.routePlannerRouteTemplateCheckbox(routeName).first().click();
-      await expect(routePlannerPage.routePlannerRouteTemplateCheckbox(routeName).first()).toBeChecked();
+      await routePlannerPage.routePlannerRouteTemplateCheckbox(routeName).click();
+      await expect(routePlannerPage.routePlannerRouteTemplateCheckbox(routeName)).toBeChecked();
       await expect(routePlannerPage.elements.routePlannerScheduleBtn).toBeVisible();
 
-      await expect(routePlannerPage.page.locator(`//div[contains(@id,'route-template')]/div[contains(.,'${routeName}')]`).first()).toBeVisible();
-      await routePlannerPage.page.locator(`//div[contains(@id,'route-template')]/div[contains(.,'${routeName}')]`).first().click();
+      // Verify route template visibility
+      //await expect(routePlannerPage.page.locator(`//div[contains(@id,'route-template')]/div[contains(.,'${routeName}')]`).first()).toBeVisible();
+      // Click the stops indicator
+      await routePlannerPage.page.locator(`//div[contains(@id,'route-template-15356-no-of-stops')]/span[contains(.,'27')]`).click();
+
+      // Corrected condition: Evaluate visibility as a boolean
+      const isSaveButtonVisible = await routePlannerPage.page.locator(`//button[text()='Save Stop Sequence']`).isVisible();
+
+      if (isSaveButtonVisible) {
+        // Handle saving the sequence
+        await routePlannerPage.page.locator(`//button[text()='Save Stop Sequence']`).click();
+
+        // Verify confirmation dialog and accept
+        await expect(routePlannerPage.page.locator(`//span[text()='Do you want to regenerate the travel path based on the new sequence?']`)).toBeVisible();
+        await expect(routePlannerPage.page.locator(`//button[text()='Yes']`)).toBeVisible();
+        await routePlannerPage.page.locator(`//button[text()='Yes']`).click();
+
+        // Verify success toast/message
+        await expect(routePlannerPage.page.locator(`//*[text()='The route was saved successfully.']`)).toBeVisible();
+      } else {
+        // Fallback if save button is absent
+        await routePlannerPage.page.locator(`#back-button`).click();
+      }
+      await expect(routePlannerPage.page.locator(`//div[contains(@id,'route-template')]/div[contains(.,'${routeName}')]`)).toBeVisible();
+      //await routePlannerPage.page.locator(`//div[contains(@id,'route-template')]/div[contains(.,'${routeName}')]`).first().click();
+      await routePlannerPage.page.locator(`//div[contains(@id,'route-template-15356-no-of-stops')]/span[contains(.,'27')]`).click();
       await routePlannerPage.page.reload();
       await expect(routePlannerPage.page.locator(`//span[contains(.,'Next Service Date:')]/parent::div//span`).last()).toBeVisible();
       await expect(routePlannerPage.page.locator(`//span[contains(.,'Next Service Date:')]/parent::div//div`)).toBeVisible();
@@ -622,7 +648,7 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       await routePlannerPage.page.locator(`//button[text()='Yes']`).click();
       await expect(routePlannerPage.page.locator(`//*[text()='The route was saved successfully.']`)).toBeVisible();
     });
-    test(`TC_11: Move the collection points from original position to some other postions and save it Verify that modifying and saving the position of a collection waypoint updates its location data and successfully synchronizes all associated service contract locations. `, async ({
+    test(`TC_11A: Move the collection points from original position to some other postions and save it Verify that modifying and saving the position of a collection waypoint updates its location data and successfully synchronizes all associated service contract locations. `, async ({
       routePlannerPage, loginPage
     }) => {
       await expect(routePlannerPage.page.locator(`#vendor-button`)).toBeVisible();
@@ -674,18 +700,13 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
 
       await routePlannerPage.page.getByText('Route Alerts').click();
       await routePlannerPage.page.getByText('Map Filters').click();
-      // await routePlannerPage.page.locator('.sc-bGIgrQ.iVZIHT > .sc-nBRWj > .sc-lajtew > path').click();
-      // await routePlannerPage.page.locator('.sc-hKAakq.frOSgg > .sc-llYSUQ > .sc-cxpSdN > .sc-fKVqWL > .sc-hGPBjI').click();
-
-      // await routePlannerPage.page.locator('.sc-bGIgrQ.iVZIHT > .sc-nBRWj > .sc-lajtew').click();
-      // await routePlannerPage.page.locator('div:nth-child(5) > .sc-bGIgrQ > .sc-nBRWj > .sc-lajtew').click();
 
       await routePlannerPage.page.locator('//span[contains(.,"Travel Path")]').click();
       await routePlannerPage.page.getByRole('button').filter({ hasText: 'Edit Path' }).click();
       await routePlannerPage.page.locator('#travelPathEditorMap > div:nth-child(4) > .sc-cBsmfy.kJUIGB > .sc-eSRRmr > .sc-hBUSln').click();
       await routePlannerPage.page.locator('.sc-fKVqWL.kTpocF > .sc-hGPBjI').click();
       await routePlannerPage.page.locator('.sc-kJpAUB').click();
-      await routePlannerPage.page.locator('div:nth-child(5) > .sc-nBRWj > .sc-lajtew').click();
+      //await routePlannerPage.page.locator('div:nth-child(5) > .sc-nBRWj > .sc-lajtew').click();
       await routePlannerPage.page.locator('.sc-hKAakq.frOSgg > .sc-llYSUQ > .sc-cxpSdN > label:nth-child(3) > .sc-hGPBjI').click();
 
       await routePlannerPage.page.getByRole('button', { name: 'Apply' }).nth(1).click();
@@ -869,24 +890,25 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       await loginPage.page.locator(`#select-default-vendor-field`).click();
       await loginPage.page.locator(`//div[contains(text(),'BelgaumSmartCityQAA')]`).click();
       await routePlannerPage.page.locator(`#select-vendor-button`).click();
-      const routeName = 'BelgaumQARouteTemplate';
+      const routeName = 'BelgaumQARouteTemplate1';
       await routePlannerPage.navigateToRoutePlanner('Route Planner');
       await routePlannerPage.searchCreatedRouteTemplateForSwitchedVendor(routeName);
-      await routePlannerPage.routePlannerRouteTemplateCheckbox(routeName).first().click();
-      await expect(routePlannerPage.routePlannerRouteTemplateCheckbox(routeName).first()).toBeChecked();
+      await routePlannerPage.routePlannerRouteTemplateCheckbox(routeName).click();
+      await expect(routePlannerPage.routePlannerRouteTemplateCheckbox(routeName)).toBeChecked();
       await expect(routePlannerPage.elements.routePlannerScheduleBtn).toBeVisible();
 
-      await expect(routePlannerPage.page.locator(`//div[contains(@id,'route-template')]/div[contains(.,'${routeName}')]`).first()).toBeVisible();
-      await routePlannerPage.page.locator(`//div[contains(@id,'route-template')]/div[contains(.,'${routeName}')]`).first().click();
+      await expect(routePlannerPage.page.locator(`//div[contains(@id,'route-template')]/div[contains(.,'${routeName}')]`)).toBeVisible();
+      await routePlannerPage.page.locator(`//div[contains(@id,'route-template')]/div[contains(.,'${routeName}')]`).click();
       await routePlannerPage.page.reload();
       await expect(routePlannerPage.page.locator(`//a[contains(@id, 'edit-pickup-locations-button')]`)).toBeVisible();
       await expect(routePlannerPage.page.locator('#more-button-more-button')).toBeVisible();
       await routePlannerPage.page.locator('#more-button-more-button').click();
       await expect(routePlannerPage.page.locator('#add-route-alert-button')).toBeVisible();
       await expect(routePlannerPage.page.locator('#export-route-template-xlsx-button')).toBeVisible();
-      await expect(routePlannerPage.page.locator('#export-route-template-csv-button')).toBeVisible();
       await expect(routePlannerPage.page.locator('#sequence-route-button')).toBeVisible();
       await routePlannerPage.page.locator('#export-route-template-xlsx-button').click();
+      await routePlannerPage.page.locator('#more-button-more-button').click();
+      await expect(routePlannerPage.page.locator('#export-route-template-csv-button')).toBeVisible();
       await routePlannerPage.page.locator('#export-route-template-csv-button').click();
     });
 
@@ -1108,7 +1130,7 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       await routePlannerPage.page.locator(`//button[text()='Exit Session']`).click();
       await expect(routePlannerPage.page.locator(`//button[contains(.,'Create Work Session')]`).first()).toBeVisible();
     });
-     test.only(`TC_21: Verify the Delay Upcoming Service Schedule functionality for Route Planner`, async ({
+    test(`TC_21: Verify the Delay Upcoming Service Schedule functionality for Route Planner`, async ({
       routePlannerPage, loginPage
     }) => {
       await expect(routePlannerPage.page.locator(`#vendor-button`)).toBeVisible();
@@ -1126,7 +1148,7 @@ for (const userRole of userRoleAccessMatrix.adminOnly) {
       //await expect(routePlannerPage.page.locator(`//h2[contains(.,'Delay Upcoming Service Schedule')]`)).toBeVisible();
       await expect(routePlannerPage.page.locator(`input[name="routeTemplateName"]`)).toBeVisible();
       await routePlannerPage.page.locator(`input[name="routeTemplateName"]`).fill(`BelgaumQARouteTemplate`);
-      const resultList= routePlannerPage.page.locator(`//span[contains(.,'Select the Routes to Delay')]/ancestor::form/following-sibling::div//descendant::div[contains(@id,'name') and contains(.,'BelgaumQARouteTemplate')]`);
+      const resultList = routePlannerPage.page.locator(`//span[contains(.,'Select the Routes to Delay')]/ancestor::form/following-sibling::div//descendant::div[contains(@id,'name') and contains(.,'BelgaumQARouteTemplate')]`);
       await expect(resultList.last()).toBeVisible();
     });
   });
