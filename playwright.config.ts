@@ -8,7 +8,7 @@ const baseConfig: PlaywrightTestConfig = {
   retries: 1,
   outputDir: `./test-results/${Date.now()}/`,
   use: {
-    headless: true,
+    headless: false,
     viewport: { width: 1280, height: 720 },
     ignoreHTTPSErrors: true,
     trace: 'retain-on-failure',
@@ -35,6 +35,6 @@ const projects = [
 
 export default defineConfig({
   reporter: [['list',''], ['html', { outputFolder: 'test-results/html-report' }], ['json', { outputFile: 'test-results/test-results.json' }]],
-  workers: 1,
+  workers: 2,
   projects,
 });
