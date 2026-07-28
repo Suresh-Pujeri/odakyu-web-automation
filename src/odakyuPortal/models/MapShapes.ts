@@ -402,7 +402,7 @@ export default class MapShapesPage {
       y: 56
     }
   });
-  await this.page.locator('.sc-dRtGhb > div:nth-child(3) > .sc-hBUSln').click();
+  await this.page.locator('.sc-inlEHy > div:nth-child(3) > .sc-hBUSln').click();
   await this.page.locator('div:nth-child(5) > .sc-hBUSln').click();
   await this.page.getByRole('button').filter({ hasText: /^$/ }).nth(4).click();
   await this.page.getByRole('region', { name: 'Map' }).click({

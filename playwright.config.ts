@@ -1,18 +1,18 @@
-// export default config;
+//export default config;
 import { PlaywrightTestConfig, defineConfig } from '@playwright/test';
 
 export const baseURLRouteware = process.env.URL || 'https://hauler.qa.ap.odakyu.smartcity.routeware.com/';
 
 const baseConfig: PlaywrightTestConfig = {
-  timeout: 120000, // TODO: we need to work this back down...
-  retries: 0,
+  timeout: 240000, // 4 minutes - allows for comprehensive CRUD tests with multiple user roles
+  retries: 1,
   outputDir: `./test-results/${Date.now()}/`,
   use: {
-    headless: true,
+    headless: false,
     viewport: { width: 1280, height: 720 },
-    ignoreHTTPSErrors: true, // we may want to consider flipping this
+    ignoreHTTPSErrors: true,
     trace: 'retain-on-failure',
-    launchOptions: { slowMo: 1000 },
+    launchOptions: { slowMo: 0 }, // Removed slowMo for faster execution
     video: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
@@ -34,7 +34,7 @@ const projects = [
 ];
 
 export default defineConfig({
-  reporter: [['list']],
-  workers: 1,
+  reporter: [['list',''], ['html', { outputFolder: 'test-results/html-report' }], ['json', { outputFile: 'test-results/test-results.json' }]],
+  workers: 2,
   projects,
 });

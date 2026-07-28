@@ -10,6 +10,7 @@ const elements = {
   applyButton: '#select-vendor-button',
   vendorDropDownField: 'div',
   vendorSearchResult: `//input[@id='vendorId']//ancestor::div//descendant::div[contains(text(),'Odakyu Premier SmartCity')]`,
+  dashBoardFilterText:`//button[contains(text(),'Vehicles')]`,
 };
 export default class LoginPage {
   readonly page: Page;
@@ -22,6 +23,8 @@ export default class LoginPage {
   readonly vendorResult: Locator;
   readonly applyBtn: Locator;
   readonly user!: object;
+  readonly dashBoardFilterText:Locator;
+
 
   constructor(page: Page, loggedInState: string, loggedOutState: string) {
     this.page = page;
@@ -33,6 +36,7 @@ export default class LoginPage {
     this.applyButton = this.page.locator(elements.applyButton);
     this.vendorResult = this.page.locator(elements.vendorSearchResult);
     this.applyBtn = page.getByRole('button', { name: 'Apply' });
+    this.dashBoardFilterText = page.locator(elements.dashBoardFilterText);
   }
   async goto(): Promise<void> {
     await this.page.goto('https://hauler.qa.ap.odakyu.smartcity.routeware.com/account/login');
@@ -64,5 +68,6 @@ export default class LoginPage {
     await this.vendorDropDown.fill(vendorName);
     await this.vendorResult.filter({ hasText: vendorName }).last().click();
     await this.applyBtn.click();
+    await expect(this.dashBoardFilterText).toBeVisible();
   }
 }
