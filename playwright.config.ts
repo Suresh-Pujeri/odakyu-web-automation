@@ -1,4 +1,4 @@
-// export default config;
+//export default config;
 import { PlaywrightTestConfig, defineConfig } from '@playwright/test';
 
 export const baseURLRouteware = process.env.URL || 'https://hauler.qa.ap.odakyu.smartcity.routeware.com/';
